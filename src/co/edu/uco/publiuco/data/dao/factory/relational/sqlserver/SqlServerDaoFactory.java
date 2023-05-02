@@ -20,7 +20,7 @@ public final class SqlServerDaoFactory extends DAOFactory{
 	protected final void abrirConexion() {
 		
 		//	:C
-		connection = 
+
 	}
 
 	@Override

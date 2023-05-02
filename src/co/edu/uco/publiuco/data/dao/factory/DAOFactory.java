@@ -2,23 +2,26 @@ package co.edu.uco.publiuco.data.dao.factory;
 
 import co.edu.uco.publiuco.data.dao.EstadoDAO;
 import co.edu.uco.publiuco.data.dao.TipoEstadoDAO;
-import co.edu.uco.publiuco.data.dao.factory.relational.sqlserver.PostgresSqlDaoFactory;
+import co.edu.uco.publiuco.data.dao.factory.relational.postgresql.PostgresSqlDaoFactory;
 import co.edu.uco.publiuco.data.dao.factory.relational.sqlserver.SqlServerDaoFactory;
 
 public abstract class DAOFactory {
 	
 	public static DAOFactory getFactory(final Factory factory) {
-		switch (factory) {
-		case SQLSERVER: {
-			DAOFactory daoFactory = new SqlServerDaoFactory();
-			break;
-		}
-		case POSTGRESQL: {
-			DAOFactory daoFactory = new PostgresSqlDaoFactory();
-			break;
-		}
-		default:
-			throw new IllegalArgumentException("Unexpected value: " + factory);
+		
+		DAOFactory daoFactory;
+		switch (factory) {			
+			case SQLSERVER: {
+				daoFactory = new SqlServerDaoFactory();
+				break;
+			}
+			case POSTGRESQL: {
+				daoFactory = new PostgresSqlDaoFactory();
+				break;
+			}
+			default: {
+				throw new IllegalArgumentException("Unexpected value: " + factory);
+			}
 		}
 		
 		return daoFactory;
