@@ -48,7 +48,7 @@ public class PostgresSqlDaoFactory extends DAOFactory{
 
 	@Override
 	public void iniciarTransaccion() {
-		connection.beginRequest();
+		//connection.beginRequest();
 
 	}
 
