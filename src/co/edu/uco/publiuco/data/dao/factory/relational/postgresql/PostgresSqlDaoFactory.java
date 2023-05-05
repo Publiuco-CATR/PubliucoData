@@ -7,17 +7,19 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import co.edu.uco.publiuco.crosscutting.exception.PubliucoDataException;
+//import co.edu.uco.publiuco.crosscutting.exception.PubliucoDataException;
 import co.edu.uco.publiuco.data.dao.EstadoDAO;
 import co.edu.uco.publiuco.data.dao.TipoEstadoDAO;
 import co.edu.uco.publiuco.data.dao.factory.DAOFactory;
+import co.edu.uco.publiuco.data.dao.relational.postresql.TipoEstadoPostreSqlDAO;
 import co.edu.uco.publiuco.data.dao.relational.sqlserver.EstadoSqlServerDAO;
 import co.edu.uco.publiuco.data.dao.relational.sqlserver.TipoEstadoSqlServerDAO;
-import co.edu.uco.publiuco.utils.Messages.UtilSqlMessages;
+//import co.edu.uco.publiuco.utils.Messages.UtilSqlMessages;
 import co.edu.uco.publiuco.utils.UtilSql;
 
 public class PostgresSqlDaoFactory extends DAOFactory{
-
+	
+	public static PostgresSqlDaoFactory INSTANCE = new PostgresSqlDaoFactory();
 	private static Connection connection;
 	private static String JDBCURL = "jdbc:postgresql://mahmud.db.elephantsql.com:5432/chiwqhoc";
 	private static String USERNAME = "chiwqhoc";
@@ -25,6 +27,10 @@ public class PostgresSqlDaoFactory extends DAOFactory{
 	
 	public PostgresSqlDaoFactory() {
 		abrirConexion();
+	}
+	
+	public static PostgresSqlDaoFactory getInstance() {
+		return INSTANCE;
 	}
 
 	@Override
@@ -39,52 +45,29 @@ public class PostgresSqlDaoFactory extends DAOFactory{
 
 	@Override
     public void iniciarTransaccion() {
-        if (UtilSql.connectionIsOpen(connection)) {
-        	try {
-                connection.setAutoCommit(false);
-            }  catch (SQLException exception) {
-                var userMessage = UtilSqlMessages.BEGIN_TRANSACTION_USER_MESSAGE;
-                var technicalMessage = UtilSqlMessages.BEGIN_TRANSACTION_TECHNICAL_MESSAGE;
-                throw PubliucoDataException.create(technicalMessage, userMessage, exception);
-            }
-        }
+        UtilSql.beginTransaction(connection);
     }
 
     @Override
     public void confirmarTransaccion() {
-        if (UtilSql.connectionIsOpen(connection)) {
-        	try {
-                connection.commit();
-            } catch (SQLException e) {
-            	cancelarTransaccion();
-                e.printStackTrace();
-            }
-        }
+        UtilSql.confirmTransaction(connection);
     }
 
     @Override
     public void cancelarTransaccion() {
-        if (UtilSql.connectionIsOpen(connection)) {
-        	try {
-                connection.rollback();
-            } catch (SQLException exception) {
-                var userMessage = UtilSqlMessages.CANCEL_TRANSACTION_USER_MESSAGE;
-                var technicalMessage = UtilSqlMessages.CANCEL_TRANSACTION_TECHNICAL_MESSAGE;
-                throw PubliucoDataException.create(technicalMessage, userMessage, exception);
-            }
-        }
+        UtilSql.cancelTransaction(connection);
     }
 
 
 	@Override
 	public TipoEstadoDAO getTipoEstadoDAO() {
 		// TODO Auto-generated method stub
-		return new TipoEstadoSqlServerDAO(connection);
+		return new TipoEstadoPostreSqlDAO(connection);
 	}
 
 	@Override
 	public EstadoDAO geEstadoDAO() {
-		// TODO Auto-generated method stub
+		// CAMBIAR CAMBIAR CAMBIAR CAMBIAR CAMBIAR
 		return new EstadoSqlServerDAO(connection);
 	}
 	
