@@ -66,11 +66,11 @@ public abstract class DAOFactory {
 	
 	public abstract void cerrarConexion();
 	
-	public abstract void iniciarTransaccion();
+	public abstract void initTransaction();
 	
-	public abstract void confirmarTransaccion();
+	public abstract void commitTransaction();
 	
-	public abstract void cancelarTransaccion();
+	public abstract void rollbackTransaction();
 	
 	public abstract PreferenciaCategoriaDAO getPreferenciaCategoriaDAO();
 	
@@ -145,5 +145,7 @@ public abstract class DAOFactory {
 	public abstract TipoRevisionDAO getTipoRevisionDAO();
 
 	public abstract VersionDAO getVersionDAO();
+
+	public abstract EstadoDAO geEstadoDAO();
 	
 }

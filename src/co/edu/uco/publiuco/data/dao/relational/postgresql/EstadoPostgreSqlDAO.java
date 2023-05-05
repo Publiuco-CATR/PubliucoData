@@ -5,6 +5,7 @@ import java.util.List;
 
 import co.edu.uco.publiuco.data.dao.EstadoDAO;
 import co.edu.uco.publiuco.entities.EstadoEntity;
+//import co.edu.uco.publiuco.
 
 public final class EstadoPostgreSqlDAO implements EstadoDAO{
 	
@@ -20,7 +21,7 @@ public final class EstadoPostgreSqlDAO implements EstadoDAO{
 
 	@Override
 	public final List<EstadoEntity> read(final EstadoEntity entity) {
-		// TODO Auto-generated method stub
+		//final EstadoEntity entity = EstadoAss
 		return null;
 	}
 
