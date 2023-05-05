@@ -11,7 +11,7 @@ import java.util.List;
 import co.edu.uco.publiuco.data.dao.EstadoDAO;
 import co.edu.uco.publiuco.data.dao.TipoEstadoDAO;
 import co.edu.uco.publiuco.data.dao.factory.DAOFactory;
-import co.edu.uco.publiuco.data.dao.relational.postresql.TipoEstadoPostreSqlDAO;
+import co.edu.uco.publiuco.data.dao.relational.postgresql.TipoEstadoPostreSqlDAO;
 import co.edu.uco.publiuco.data.dao.relational.sqlserver.EstadoSqlServerDAO;
 import co.edu.uco.publiuco.data.dao.relational.sqlserver.TipoEstadoSqlServerDAO;
 //import co.edu.uco.publiuco.utils.Messages.UtilSqlMessages;

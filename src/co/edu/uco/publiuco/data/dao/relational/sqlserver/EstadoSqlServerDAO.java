@@ -8,12 +8,12 @@ import co.edu.uco.publiuco.entities.EstadoEntity;
 
 public final class EstadoSqlServerDAO implements EstadoDAO{
 
-	public EstadoSqlServerDAO(final Connection connection){
+	public EstadoSqlServerDAO(final Connection connection) {
 		
 	}
-	
+
 	@Override
-	public final void create(final EstadoEntity entity) {
+	public void create(final EstadoEntity entity) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -35,5 +35,6 @@ public final class EstadoSqlServerDAO implements EstadoDAO{
 		// TODO Auto-generated method stub
 		
 	}
+
 	
 }
