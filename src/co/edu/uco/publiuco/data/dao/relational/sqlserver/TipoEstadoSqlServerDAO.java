@@ -18,11 +18,6 @@ public final class TipoEstadoSqlServerDAO implements TipoEstadoDAO{
 		
 	}
 
-	@Override
-	public final List<TipoEstadoEntity> read(final TipoEstadoEntity entity) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public final void update(final TipoEstadoEntity entity) {
@@ -34,6 +29,12 @@ public final class TipoEstadoSqlServerDAO implements TipoEstadoDAO{
 	public final void delete(final TipoEstadoEntity entity) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public List<TipoEstadoEntity> consultar(TipoEstadoEntity entity) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }
