@@ -62,9 +62,9 @@ public abstract class DAOFactory {
 		return daoFactory;
 	}
 	
-	protected abstract void abrirConexion();
+	protected abstract void openConnection();
 	
-	public abstract void cerrarConexion();
+	public abstract void closeConnection();
 	
 	public abstract void initTransaction();
 	

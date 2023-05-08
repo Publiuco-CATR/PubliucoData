@@ -15,7 +15,6 @@ import co.edu.uco.publiuco.data.dao.ComentarioLectorDAO;
 import co.edu.uco.publiuco.data.dao.ComentarioRevisorDAO;
 import co.edu.uco.publiuco.data.dao.EscritorDAO;
 import co.edu.uco.publiuco.data.dao.EscritorPublicacionDAO;
-//import co.edu.uco.publiuco.crosscutting.exception.PubliucoDataException;
 import co.edu.uco.publiuco.data.dao.EstadoDAO;
 import co.edu.uco.publiuco.data.dao.HistorialAccesoPublicacionDAO;
 import co.edu.uco.publiuco.data.dao.LectorDAO;
@@ -48,8 +47,6 @@ import co.edu.uco.publiuco.data.dao.VersionDAO;
 import co.edu.uco.publiuco.data.dao.factory.DAOFactory;
 import co.edu.uco.publiuco.data.dao.relational.postgresql.TipoEstadoPostreSqlDAO;
 import co.edu.uco.publiuco.data.dao.relational.sqlserver.EstadoSqlServerDAO;
-import co.edu.uco.publiuco.data.dao.relational.sqlserver.TipoEstadoSqlServerDAO;
-//import co.edu.uco.publiuco.utils.Messages.UtilSqlMessages;
 import co.edu.uco.publiuco.utils.UtilSql;
 
 public class PostgresSqlDaoFactory extends DAOFactory{
@@ -61,7 +58,7 @@ public class PostgresSqlDaoFactory extends DAOFactory{
 	private static String PASSWORD = "JnwYqKUX1N9Skfs1WfetoscUE431ULfU";	
 	
 	public PostgresSqlDaoFactory() {
-		abrirConexion();
+		openConnection();
 	}
 	
 	public static PostgresSqlDaoFactory getInstance() {
@@ -69,34 +66,33 @@ public class PostgresSqlDaoFactory extends DAOFactory{
 	}
 
 	@Override
-	protected void abrirConexion() {
+	protected void openConnection() {
 		connection = UtilSql.openConnection(JDBCURL, USERNAME, PASSWORD);
 	}
 
 	@Override
-	public void cerrarConexion() {
+	public void closeConnection() {
 		UtilSql.closeConnection(connection);
 	}
 
 	@Override
     public void initTransaction() {
-        UtilSql.beginTransaction(connection);
+        UtilSql.initTransaction(connection);
     }
 
     @Override
     public void commitTransaction() {
-        UtilSql.confirmTransaction(connection);
+        UtilSql.commitTransaction(connection);
     }
 
     @Override
     public void rollbackTransaction() {
-        UtilSql.cancelTransaction(connection);
+        UtilSql.rollbackTransaction(connection);
     }
 
 
 	@Override
 	public TipoEstadoDAO getTipoEstadoDAO() {
-		// TODO Auto-generated method stub
 		return new TipoEstadoPostreSqlDAO(connection);
 	}
 
@@ -135,7 +131,7 @@ public class PostgresSqlDaoFactory extends DAOFactory{
 				
 		PostgresSqlDaoFactory intento = new PostgresSqlDaoFactory();
 		System.out.println(intento.getTiposEstados());
-		intento.cerrarConexion();
+		intento.closeConnection();
 	}
 
 	@Override
