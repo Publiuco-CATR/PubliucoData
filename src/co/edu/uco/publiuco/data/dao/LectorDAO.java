@@ -1,6 +1,7 @@
 package co.edu.uco.publiuco.data.dao;
 
 import java.util.List;
+import java.util.UUID;
 
 import co.edu.uco.publiuco.entities.LectorEntity;
 
@@ -12,6 +13,6 @@ public interface LectorDAO {
 
 	void update(LectorEntity entity);
 
-	void delete(LectorEntity entity);
+	void delete(UUID entityid);
 
 }

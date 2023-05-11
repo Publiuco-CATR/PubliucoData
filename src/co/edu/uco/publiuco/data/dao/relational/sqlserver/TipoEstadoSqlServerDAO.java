@@ -2,6 +2,7 @@ package co.edu.uco.publiuco.data.dao.relational.sqlserver;
 
 import java.sql.Connection;
 import java.util.List;
+import java.util.UUID;
 
 import co.edu.uco.publiuco.data.dao.TipoEstadoDAO;
 import co.edu.uco.publiuco.entities.TipoEstadoEntity;
@@ -17,7 +18,13 @@ public final class TipoEstadoSqlServerDAO implements TipoEstadoDAO{
 		// TODO Auto-generated method stub
 		
 	}
+	
 
+	@Override
+	public List<TipoEstadoEntity> read(TipoEstadoEntity entity) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	@Override
 	public final void update(final TipoEstadoEntity entity) {
@@ -26,16 +33,8 @@ public final class TipoEstadoSqlServerDAO implements TipoEstadoDAO{
 	}
 
 	@Override
-	public final void delete(final TipoEstadoEntity entity) {
+	public final void delete(final UUID entityid) {
 		// TODO Auto-generated method stub
 		
-	}
-
-
-	@Override
-	public List<TipoEstadoEntity> read(TipoEstadoEntity entity) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
+	}	
 }

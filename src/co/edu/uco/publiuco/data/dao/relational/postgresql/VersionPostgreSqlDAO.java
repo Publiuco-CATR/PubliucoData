@@ -2,6 +2,7 @@ package co.edu.uco.publiuco.data.dao.relational.postgresql;
 
 import java.sql.Connection;
 import java.util.List;
+import java.util.UUID;
 
 import co.edu.uco.publiuco.data.dao.VersionDAO;
 import co.edu.uco.publiuco.entities.VersionEntity;
@@ -31,7 +32,7 @@ public class VersionPostgreSqlDAO implements VersionDAO {
 	}
 
 	@Override
-	public void delete(VersionEntity entity) {
+	public void delete(UUID entityid) {
 		// TODO Auto-generated method stub
 		
 	}

@@ -1,6 +1,7 @@
 package co.edu.uco.publiuco.data.dao;
 
 import java.util.List;
+import java.util.UUID;
 
 import co.edu.uco.publiuco.entities.EscritorPublicacionEntity;
 
@@ -12,6 +13,6 @@ public interface EscritorPublicacionDAO {
 
 	void update(EscritorPublicacionEntity entity);
 
-	void delete(EscritorPublicacionEntity entity);
+	void delete(UUID entityId);
 
 }

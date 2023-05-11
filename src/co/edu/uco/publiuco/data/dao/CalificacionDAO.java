@@ -1,6 +1,7 @@
 package co.edu.uco.publiuco.data.dao;
 
 import java.util.List;
+import java.util.UUID;
 
 import co.edu.uco.publiuco.entities.CalificacionEntity;
 
@@ -12,6 +13,6 @@ public interface CalificacionDAO {
 
 	void update(CalificacionEntity entity);
 
-	void delete(CalificacionEntity entity);
+	void delete(UUID entityId);
 	
 }

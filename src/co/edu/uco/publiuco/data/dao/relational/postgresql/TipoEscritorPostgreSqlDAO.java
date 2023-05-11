@@ -2,6 +2,7 @@ package co.edu.uco.publiuco.data.dao.relational.postgresql;
 
 import java.sql.Connection;
 import java.util.List;
+import java.util.UUID;
 
 import co.edu.uco.publiuco.data.dao.TipoEscritorDAO;
 import co.edu.uco.publiuco.entities.TipoEscritorEntity;
@@ -31,7 +32,7 @@ public class TipoEscritorPostgreSqlDAO implements TipoEscritorDAO {
 	}
 
 	@Override
-	public void delete(TipoEscritorEntity entity) {
+	public void delete(UUID entityId) {
 		// TODO Auto-generated method stub
 		
 	}

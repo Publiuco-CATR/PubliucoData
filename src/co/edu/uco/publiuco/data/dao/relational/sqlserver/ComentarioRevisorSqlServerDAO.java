@@ -2,6 +2,7 @@ package co.edu.uco.publiuco.data.dao.relational.sqlserver;
 
 import java.sql.Connection;
 import java.util.List;
+import java.util.UUID;
 
 import co.edu.uco.publiuco.data.dao.ComentarioRevisorDAO;
 import co.edu.uco.publiuco.entities.ComentarioRevisorEntity;
@@ -31,7 +32,7 @@ public class ComentarioRevisorSqlServerDAO implements ComentarioRevisorDAO{
 	}
 
 	@Override
-	public void delete(ComentarioRevisorEntity entity) {
+	public void delete(UUID entityId) {
 		// TODO Auto-generated method stub
 		
 	}

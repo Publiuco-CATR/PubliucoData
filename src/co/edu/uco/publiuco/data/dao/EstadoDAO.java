@@ -1,6 +1,8 @@
 package co.edu.uco.publiuco.data.dao;
 
 import java.util.List;
+import java.util.UUID;
+
 import co.edu.uco.publiuco.entities.EstadoEntity;
 
 public interface EstadoDAO {
@@ -11,5 +13,5 @@ public interface EstadoDAO {
 	
 	void update(EstadoEntity entity);
 	
-	void delete(EstadoEntity entity);
+	void delete(UUID id_entity);
 }

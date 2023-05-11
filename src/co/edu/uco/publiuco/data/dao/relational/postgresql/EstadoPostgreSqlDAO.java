@@ -56,7 +56,7 @@ public final class EstadoPostgreSqlDAO implements EstadoDAO{
 	}
 
 	@Override
-	public final void delete(final EstadoEntity entity) {
+	public final void delete(final UUID entityId) {
 		// TODO Auto-generated method stub
 		
 	}

@@ -2,6 +2,7 @@ package co.edu.uco.publiuco.data.dao.relational.postgresql;
 
 import java.sql.Connection;
 import java.util.List;
+import java.util.UUID;
 
 import co.edu.uco.publiuco.data.dao.LectorDAO;
 import co.edu.uco.publiuco.entities.LectorEntity;
@@ -31,7 +32,7 @@ public class LectorPostgreSqlDAO implements LectorDAO {
 	}
 
 	@Override
-	public void delete(LectorEntity entity) {
+	public void delete(UUID entityId) {
 		// TODO Auto-generated method stub
 		
 	}

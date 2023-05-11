@@ -1,6 +1,7 @@
 package co.edu.uco.publiuco.data.dao;
 
 import java.util.List;
+import java.util.UUID;
 
 import co.edu.uco.publiuco.entities.VersionEntity;
 
@@ -12,6 +13,6 @@ public interface VersionDAO {
 
 	void update(VersionEntity entity);
 
-	void delete(VersionEntity entity);
+	void delete(UUID entityId);
 
 }

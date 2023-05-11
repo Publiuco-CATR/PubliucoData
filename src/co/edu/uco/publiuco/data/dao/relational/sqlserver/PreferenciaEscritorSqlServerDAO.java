@@ -2,6 +2,7 @@ package co.edu.uco.publiuco.data.dao.relational.sqlserver;
 
 import java.sql.Connection;
 import java.util.List;
+import java.util.UUID;
 
 import co.edu.uco.publiuco.data.dao.PreferenciaEscritorDAO;
 import co.edu.uco.publiuco.entities.PreferenciaEscritorEntity;
@@ -31,7 +32,7 @@ public class PreferenciaEscritorSqlServerDAO implements PreferenciaEscritorDAO {
 	}
 
 	@Override
-	public void delete(PreferenciaEscritorEntity entity) {
+	public void delete(UUID entityId) {
 		// TODO Auto-generated method stub
 		
 	}

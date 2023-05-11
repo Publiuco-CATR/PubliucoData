@@ -131,7 +131,7 @@ public abstract class DAOFactory {
 	public abstract SuscripcionPublicacionDAO getSuscripcionPublicacionDAO();
 
 	public abstract TipoAccesoDAO getTipoAccesoDAO();
-
+	
 	public abstract TipoComentarioRevisorDAO getTipoComentarioRevisorDAO();
 
 	public abstract TipoEscritorDAO getTipoEscritorDAO();

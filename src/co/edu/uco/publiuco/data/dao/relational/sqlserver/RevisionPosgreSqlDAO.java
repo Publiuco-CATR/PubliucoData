@@ -2,6 +2,7 @@ package co.edu.uco.publiuco.data.dao.relational.sqlserver;
 
 import java.sql.Connection;
 import java.util.List;
+import java.util.UUID;
 
 import co.edu.uco.publiuco.data.dao.RevisionDAO;
 import co.edu.uco.publiuco.entities.RevisionEntity;
@@ -31,7 +32,7 @@ public class RevisionPosgreSqlDAO implements RevisionDAO {
 	}
 
 	@Override
-	public void delete(RevisionEntity entity) {
+	public void delete(UUID entityId) {
 		// TODO Auto-generated method stub
 		
 	}

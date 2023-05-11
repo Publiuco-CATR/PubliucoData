@@ -1,6 +1,7 @@
 package co.edu.uco.publiuco.data.dao;
 
 import java.util.List;
+import java.util.UUID;
 
 import co.edu.uco.publiuco.entities.RevisorEntity;
 
@@ -12,6 +13,6 @@ public interface RevisorDAO {
 
 	void update(RevisorEntity entity);
 
-	void delete(RevisorEntity entity);
+	void delete(UUID entityId);
 
 }

@@ -1,6 +1,7 @@
 package co.edu.uco.publiuco.data.dao;
 
 import java.util.List;
+import java.util.UUID;
 
 import co.edu.uco.publiuco.entities.AdministradorCategoriaEntity;
 
@@ -12,6 +13,6 @@ public interface AdministradorCategoriaDAO {
 
 	void update(AdministradorCategoriaEntity entity);
 
-	void delete(AdministradorCategoriaEntity entity);
+	void delete(UUID entityId);
     
 }

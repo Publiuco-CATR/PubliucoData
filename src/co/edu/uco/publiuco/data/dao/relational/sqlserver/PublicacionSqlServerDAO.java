@@ -2,6 +2,7 @@ package co.edu.uco.publiuco.data.dao.relational.sqlserver;
 
 import java.sql.Connection;
 import java.util.List;
+import java.util.UUID;
 
 import co.edu.uco.publiuco.data.dao.PublicacionDAO;
 import co.edu.uco.publiuco.entities.PublicacionEntity;
@@ -31,7 +32,7 @@ public class PublicacionSqlServerDAO implements PublicacionDAO {
 	}
 
 	@Override
-	public void delete(PublicacionEntity entity) {
+	public void delete(UUID entityId) {
 		// TODO Auto-generated method stub
 		
 	}

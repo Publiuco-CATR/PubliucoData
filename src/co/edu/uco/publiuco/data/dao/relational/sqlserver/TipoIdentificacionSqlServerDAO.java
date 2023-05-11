@@ -3,6 +3,7 @@ package co.edu.uco.publiuco.data.dao.relational.sqlserver;
 
 import java.sql.Connection;
 import java.util.List;
+import java.util.UUID;
 
 import co.edu.uco.publiuco.data.dao.TipoIdentificacionDAO;
 import co.edu.uco.publiuco.entities.TipoIdentificacionEntity;
@@ -32,7 +33,7 @@ public class TipoIdentificacionSqlServerDAO implements TipoIdentificacionDAO {
 	}
 
 	@Override
-	public void delete(TipoIdentificacionEntity entity) {
+	public void delete(UUID entityId) {
 		// TODO Auto-generated method stub
 		
 	}

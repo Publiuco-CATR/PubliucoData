@@ -1,6 +1,7 @@
 package co.edu.uco.publiuco.data.dao;
 
 import java.util.List;
+import java.util.UUID;
 
 import co.edu.uco.publiuco.entities.TipoEscritorEntity;
 
@@ -12,6 +13,6 @@ public interface TipoEscritorDAO {
 	
 	void update(TipoEscritorEntity entity);
 
-	void delete(TipoEscritorEntity entity);
+	void delete(UUID entityId);
 
 }

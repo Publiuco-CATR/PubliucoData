@@ -2,6 +2,7 @@ package co.edu.uco.publiuco.data.dao.relational.postgresql;
 
 import java.sql.Connection;
 import java.util.List;
+import java.util.UUID;
 
 import co.edu.uco.publiuco.data.dao.TipoRevisionDAO;
 import co.edu.uco.publiuco.entities.TipoRevisionEntity;
@@ -31,7 +32,7 @@ public class TipoRevisionPostgreSqlDAO implements TipoRevisionDAO {
 	}
 
 	@Override
-	public void delete(TipoRevisionEntity entity) {
+	public void delete(UUID entityId) {
 		// TODO Auto-generated method stub
 		
 	}

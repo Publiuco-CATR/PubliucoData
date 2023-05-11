@@ -2,6 +2,7 @@ package co.edu.uco.publiuco.data.dao.relational.sqlserver;
 
 import java.sql.Connection;
 import java.util.List;
+import java.util.UUID;
 
 import co.edu.uco.publiuco.data.dao.EstadoDAO;
 import co.edu.uco.publiuco.entities.EstadoEntity;
@@ -31,7 +32,7 @@ public final class EstadoSqlServerDAO implements EstadoDAO{
 	}
 
 	@Override
-	public final void delete(final EstadoEntity entity) {
+	public final void delete(final UUID entityId) {
 		// TODO Auto-generated method stub
 		
 	}

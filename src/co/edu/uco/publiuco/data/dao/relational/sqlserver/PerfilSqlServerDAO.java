@@ -2,6 +2,7 @@ package co.edu.uco.publiuco.data.dao.relational.sqlserver;
 
 import java.sql.Connection;
 import java.util.List;
+import java.util.UUID;
 
 import co.edu.uco.publiuco.data.dao.PerfilDAO;
 import co.edu.uco.publiuco.entities.PerfilEntity;
@@ -31,7 +32,7 @@ public class PerfilSqlServerDAO implements PerfilDAO {
 	}
 
 	@Override
-	public void delete(PerfilEntity entity) {
+	public void delete(UUID entityId) {
 		// TODO Auto-generated method stub
 		
 	}
