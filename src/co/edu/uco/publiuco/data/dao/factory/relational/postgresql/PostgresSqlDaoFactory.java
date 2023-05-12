@@ -102,7 +102,7 @@ public class PostgresSqlDaoFactory extends DAOFactory{
 		return new EstadoSqlServerDAO(connection);
 	}
 	
-	public List<String> getTiposEstados() {
+	/*public List<String> getTiposEstados() {
 	    List<String> tipos = new ArrayList<>();
 	    PreparedStatement ps = null;
 	    ResultSet rs = null;
@@ -125,14 +125,7 @@ public class PostgresSqlDaoFactory extends DAOFactory{
 
 	    return tipos;
 	}
-
-
-	public static void main(String[] args) throws SQLException {
-				
-		PostgresSqlDaoFactory intento = new PostgresSqlDaoFactory();
-		System.out.println(intento.getTiposEstados());
-		intento.closeConnection();
-	}
+	*/
 
 	@Override
 	public PreferenciaCategoriaDAO getPreferenciaCategoriaDAO() {
