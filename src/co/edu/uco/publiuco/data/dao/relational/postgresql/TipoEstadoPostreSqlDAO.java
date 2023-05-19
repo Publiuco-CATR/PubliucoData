@@ -10,6 +10,7 @@ import co.edu.uco.publiuco.crosscutting.exception.PubliucoDataException;
 import co.edu.uco.publiuco.data.dao.TipoEstadoDAO;
 import co.edu.uco.publiuco.data.dao.relational.SqlDAO;
 import co.edu.uco.publiuco.entities.TipoEstadoEntity;
+import co.edu.uco.publiuco.utils.Messages;
 import co.edu.uco.publiuco.utils.UtilObject;
 import co.edu.uco.publiuco.utils.UtilText;
 import co.edu.uco.publiuco.utils.UtilUUID;
@@ -33,13 +34,13 @@ public class TipoEstadoPostreSqlDAO extends SqlDAO<TipoEstadoEntity> implements 
 			preparedStatement.executeUpdate();
 			
 		}catch (SQLException exception) {
-			var userMessage = "Se ha presentado un problema tratando de registrar la informacion del nuevo Tipo Estado";
-			var technicalMessage = "Se ha presentado un problema dentro del método create de la clase TipoEstadoPostgreSqlDAO de tipo Sqlexception. Por favor verifique la traza completa del error.";
+			var userMessage = Messages.TipoEstadoSql.USER_MESSAGE_CREATE;
+			var technicalMessage = Messages.TipoEstadoSql.TECHNICAL_MESSAGE_CREATE;
 			throw PubliucoDataException.create(technicalMessage, userMessage, exception);
 			
 		}catch (Exception exception) {
-			var userMessage = "Se ha presentado un problema inesperado tratando de registrar la informacion del nuevo Tipo Estado";
-			var technicalMessage = "Se ha presentado un problema inesperado dentro del método create de la clase TipoEstadoPostgreSqlDAO de tipo Exception. Por favor verifique la traza completa del error.";
+			var userMessage = Messages.TipoEstadoSql.USER_MESSAGE_CREATE;
+			var technicalMessage = Messages.TipoEstadoSql.TECHNICAL_MESSAGE_CREATE_JAVA_EXCEPTION;
 			throw PubliucoDataException.create(technicalMessage, userMessage, exception);
 		}		
 	}
@@ -59,9 +60,14 @@ public class TipoEstadoPostreSqlDAO extends SqlDAO<TipoEstadoEntity> implements 
 			
 			
 		} catch (SQLException exception) {
+			var userMessage = Messages.TipoEstadoSql.USER_MESSAGE_CREATE;
+			var technicalMessage = Messages.TipoEstadoSql.TECHNICAL_MESSAGE_CREATE;
+			throw PubliucoDataException.create(technicalMessage, userMessage, exception);
 			
-		} catch (Exception exception) {
-			
+		}catch (Exception exception) {
+			var userMessage = Messages.TipoEstadoSql.USER_MESSAGE_CREATE;
+			var technicalMessage = Messages.TipoEstadoSql.TECHNICAL_MESSAGE_CREATE_JAVA_EXCEPTION;
+			throw PubliucoDataException.create(technicalMessage, userMessage, exception);
 		}
 		
 		return null;
@@ -79,13 +85,13 @@ public class TipoEstadoPostreSqlDAO extends SqlDAO<TipoEstadoEntity> implements 
 			preparedStatement.executeUpdate();
 			
 		}catch (SQLException exception) {
-			var userMessage = "Se ha presentado un problema tratando de modificar la informacion del Tipo Estado";
-			var technicalMessage = "Se ha presentado un problema dentro del método update de la clase TipoEstadoPostgreSqlDAO de tipo Sqlexception. Por favor verifique la traza completa del error.";
+			var userMessage = Messages.TipoEstadoSql.USER_MESSAGE_READ;
+			var technicalMessage = Messages.TipoEstadoSql.TECHNICAL_MESSAGE_READ;
 			throw PubliucoDataException.create(technicalMessage, userMessage, exception);
 			
 		}catch (Exception exception) {
-			var userMessage = "Se ha presentado un problema inesperado tratando de modificar la informacion del Tipo Estado";
-			var technicalMessage = "Se ha presentado un problema inesperado dentro del método update de la clase TipoEstadoPostgreSqlDAO de tipo Exception. Por favor verifique la traza completa del error.";
+			var userMessage = Messages.TipoEstadoSql.USER_MESSAGE_READ;
+			var technicalMessage = Messages.TipoEstadoSql.TECHNICAL_MESSAGE_READ_JAVA_EXCEPTION;
 			throw PubliucoDataException.create(technicalMessage, userMessage, exception);
 		}		
 		
@@ -101,13 +107,13 @@ public class TipoEstadoPostreSqlDAO extends SqlDAO<TipoEstadoEntity> implements 
 			preparedStatement.executeUpdate();
 			
 		}catch (SQLException exception) {
-			var userMessage = "Se ha presentado un problema tratando de eliminar la informacion del Tipo Estado";
-			var technicalMessage = "Se ha presentado un problema dentro del método delete de la clase TipoEstadoPostgreSqlDAO de tipo Sqlexception. Por favor verifique la traza completa del error.";
+			var userMessage = Messages.TipoEstadoSql.USER_MESSAGE_DELETE;
+			var technicalMessage = Messages.TipoEstadoSql.TECHNICAL_MESSAGE_DELETE;
 			throw PubliucoDataException.create(technicalMessage, userMessage, exception);
 			
 		}catch (Exception exception) {
-			var userMessage = "Se ha presentado un problema inesperado tratando de eliminar la informacion del Tipo Estado";
-			var technicalMessage = "Se ha presentado un problema inesperado dentro del método delete de la clase TipoEstadoPostgreSqlDAO de tipo Exception. Por favor verifique la traza completa del error.";
+			var userMessage = Messages.TipoEstadoSql.USER_MESSAGE_DELETE;
+			var technicalMessage = Messages.TipoEstadoSql.TECHNICAL_MESSAGE_DELETE_JAVA_EXCEPTION;
 			throw PubliucoDataException.create(technicalMessage, userMessage, exception);
 		}		
 	}
