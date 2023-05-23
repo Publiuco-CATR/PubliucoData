@@ -1,6 +1,7 @@
 package co.edu.uco.publiuco.data.dao.relational.postgresql;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,8 +10,10 @@ import java.util.UUID;
 import co.edu.uco.publiuco.crosscutting.exception.PubliucoDataException;
 import co.edu.uco.publiuco.data.dao.TipoEstadoDAO;
 import co.edu.uco.publiuco.data.dao.relational.SqlDAO;
+import co.edu.uco.publiuco.entities.TipoEscritorEntity;
 import co.edu.uco.publiuco.entities.TipoEstadoEntity;
 import co.edu.uco.publiuco.utils.Messages;
+import co.edu.uco.publiuco.utils.Messages.TipoEstadoSql;
 import co.edu.uco.publiuco.utils.UtilObject;
 import co.edu.uco.publiuco.utils.UtilText;
 import co.edu.uco.publiuco.utils.UtilUUID;
@@ -22,32 +25,7 @@ public class TipoEstadoPostreSqlDAO extends SqlDAO<TipoEstadoEntity> implements 
 	}
 	
 	@Override
-	public void create(TipoEstadoEntity entity) {
-		
-		var sqlStatement = "INSERT INTO \"TipoEstado\"( identificador, nombre, descripcion) VALUES (?, ?, ?);";
-		
-		try (var preparedStatement = getConnection().prepareStatement(sqlStatement)) {
-			preparedStatement.setObject(1, entity.getIdentificador());
-			preparedStatement.setString(2, entity.getNombre());
-			preparedStatement.setString(3, entity.getDescripcion());
-			
-			preparedStatement.executeUpdate();
-			
-		}catch (SQLException exception) {
-			var userMessage = Messages.TipoEstadoSql.USER_MESSAGE_CREATE;
-			var technicalMessage = Messages.TipoEstadoSql.TECHNICAL_MESSAGE_CREATE;
-			throw PubliucoDataException.create(technicalMessage, userMessage, exception);
-			
-		}catch (Exception exception) {
-			var userMessage = Messages.TipoEstadoSql.USER_MESSAGE_CREATE;
-			var technicalMessage = Messages.TipoEstadoSql.TECHNICAL_MESSAGE_CREATE_JAVA_EXCEPTION;
-			throw PubliucoDataException.create(technicalMessage, userMessage, exception);
-		}		
-	}
-
-
-	@Override
-	public List<TipoEstadoEntity> read(TipoEstadoEntity entity) {
+	public final List<TipoEstadoEntity> read(TipoEstadoEntity entity) {
 		var sqlStatement = new StringBuilder();
 		var parameters = new ArrayList<>();
 		
@@ -57,65 +35,16 @@ public class TipoEstadoPostreSqlDAO extends SqlDAO<TipoEstadoEntity> implements 
 		sqlStatement.append(preparedOrderBy());
 		
 		try (var preparedstatement = getConnection().prepareStatement(sqlStatement.toString())){
+			setParameters(preparedstatement, parameters);
 			
+			return executeQuery(preparedstatement);
 			
 		} catch (SQLException exception) {
-			var userMessage = Messages.TipoEstadoSql.USER_MESSAGE_CREATE;
-			var technicalMessage = Messages.TipoEstadoSql.TECHNICAL_MESSAGE_CREATE;
-			throw PubliucoDataException.create(technicalMessage, userMessage, exception);
+			throw PubliucoDataException.create(Messages.TipoEstadoSql.TECHNICAL_MESSAGE_CREATE, Messages.TipoEstadoSql.USER_MESSAGE_CREATE, exception);
 			
 		}catch (Exception exception) {
-			var userMessage = Messages.TipoEstadoSql.USER_MESSAGE_CREATE;
-			var technicalMessage = Messages.TipoEstadoSql.TECHNICAL_MESSAGE_CREATE_JAVA_EXCEPTION;
-			throw PubliucoDataException.create(technicalMessage, userMessage, exception);
+			throw PubliucoDataException.create(Messages.TipoEstadoSql.TECHNICAL_MESSAGE_CREATE_JAVA_EXCEPTION, Messages.TipoEstadoSql.USER_MESSAGE_CREATE, exception);
 		}
-		
-		return null;
-	}
-	
-	@Override
-	public void update(TipoEstadoEntity entity) {
-		var sqlStatement = "UPDATE \"TipoEstado\" SET nombre=?, descripcion = ? WHERE identificador = ?;";
-		
-		try (var preparedStatement = getConnection().prepareStatement(sqlStatement)) {
-			preparedStatement.setString(1, entity.getNombre());
-			preparedStatement.setString(2, entity.getDescripcion());
-			preparedStatement.setObject(3, entity.getIdentificador());
-			
-			preparedStatement.executeUpdate();
-			
-		}catch (SQLException exception) {
-			var userMessage = Messages.TipoEstadoSql.USER_MESSAGE_READ;
-			var technicalMessage = Messages.TipoEstadoSql.TECHNICAL_MESSAGE_READ;
-			throw PubliucoDataException.create(technicalMessage, userMessage, exception);
-			
-		}catch (Exception exception) {
-			var userMessage = Messages.TipoEstadoSql.USER_MESSAGE_READ;
-			var technicalMessage = Messages.TipoEstadoSql.TECHNICAL_MESSAGE_READ_JAVA_EXCEPTION;
-			throw PubliucoDataException.create(technicalMessage, userMessage, exception);
-		}		
-		
-	}
-
-	@Override
-	public void delete(UUID entityid) {
-		var sqlStatement = "DELETE FROM \"TipoEstado\" WHERE identificador = ?;";
-		
-		try (var preparedStatement = getConnection().prepareStatement(sqlStatement)) {
-			preparedStatement.setObject(1, entityid);
-			
-			preparedStatement.executeUpdate();
-			
-		}catch (SQLException exception) {
-			var userMessage = Messages.TipoEstadoSql.USER_MESSAGE_DELETE;
-			var technicalMessage = Messages.TipoEstadoSql.TECHNICAL_MESSAGE_DELETE;
-			throw PubliucoDataException.create(technicalMessage, userMessage, exception);
-			
-		}catch (Exception exception) {
-			var userMessage = Messages.TipoEstadoSql.USER_MESSAGE_DELETE;
-			var technicalMessage = Messages.TipoEstadoSql.TECHNICAL_MESSAGE_DELETE_JAVA_EXCEPTION;
-			throw PubliucoDataException.create(technicalMessage, userMessage, exception);
-		}		
 	}
 
 	@Override
@@ -160,6 +89,45 @@ public class TipoEstadoPostreSqlDAO extends SqlDAO<TipoEstadoEntity> implements 
 	protected final String preparedOrderBy() {
 		return "ORDER BY nombre ASC";
 	}
+	
+	@Override
+	protected final void setParameters(final PreparedStatement preparedStatement, final List<Object> parameters) {
+		try {
+			if (!UtilObject.isNull(parameters) && !UtilObject.isNull(preparedStatement))  {
+				for(int index = 0; index < parameters.size(); index ++) {
+					preparedStatement.setObject(index + 1, parameters.get(index));
+				}
+			}	
+		}catch(final SQLException exception) {
+			throw PubliucoDataException.create(Messages.TipoEstadoSql.TECHNICAL_MESSAGE_SET_PARAMETERS, Messages.TipoEstadoSql.USER_MESSAGE_SET_PARAMETERS, exception);
+			
+		}catch(final Exception exception) {			
+			throw PubliucoDataException.create(Messages.TipoEstadoSql.TECHNICAL_MESSAGE_SET_PARAMETERS_JAVA_EXCEPTION, Messages.TipoEstadoSql.USER_MESSAGE_SET_PARAMETERS, exception);
 
+		}
+	}
 
+	@Override
+	protected final List<TipoEstadoEntity> executeQuery(PreparedStatement preparedStatement) {
+		
+		final List<TipoEstadoEntity> result = new ArrayList<>();
+		
+		try (var resultSet = preparedStatement.executeQuery()){
+			while(resultSet.next()) {
+				var entityTmp = new TipoEstadoEntity(
+						resultSet.getObject(1, UUID.class), 
+						resultSet.getString(2), 
+						resultSet.getString(3));
+				result.add(entityTmp);
+			}
+			return result;
+			
+		} catch(final SQLException exception) {			
+			throw PubliucoDataException.create(Messages.TipoEstadoSql.TECHNICAL_MESSAGE_EXECUTE, Messages.TipoEstadoSql.USER_MESSAGE_EXECUTE, exception);
+			
+		}catch(final Exception exception) {			
+			throw PubliucoDataException.create(Messages.TipoEstadoSql.TECHNICAL_MESSAGE_EXECUTE_JAVA_EXCEPTION, Messages.TipoEstadoSql.USER_MESSAGE_EXECUTE, exception);
+
+		}		
+	}
 }

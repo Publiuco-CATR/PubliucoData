@@ -145,7 +145,5 @@ public abstract class DAOFactory {
 	public abstract TipoRevisionDAO getTipoRevisionDAO();
 
 	public abstract VersionDAO getVersionDAO();
-
-	public abstract EstadoDAO geEstadoDAO();
 	
 }

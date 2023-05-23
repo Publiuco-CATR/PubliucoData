@@ -45,7 +45,43 @@ import co.edu.uco.publiuco.data.dao.TipoReporteDAO;
 import co.edu.uco.publiuco.data.dao.TipoRevisionDAO;
 import co.edu.uco.publiuco.data.dao.VersionDAO;
 import co.edu.uco.publiuco.data.dao.factory.DAOFactory;
+import co.edu.uco.publiuco.data.dao.relational.postgresql.AdministradorCategoriaPostgreSqlDAO;
+import co.edu.uco.publiuco.data.dao.relational.postgresql.CalificacionPostgreSqlDAO;
+import co.edu.uco.publiuco.data.dao.relational.postgresql.CategoriaAdministradorCategoriaPostgreSqlDAO;
+import co.edu.uco.publiuco.data.dao.relational.postgresql.CategoriaPostgreSqlDAO;
+import co.edu.uco.publiuco.data.dao.relational.postgresql.ComentarioLectorPostgreSqlDAO;
+import co.edu.uco.publiuco.data.dao.relational.postgresql.ComentarioRevisorPostgreSqlDAO;
+import co.edu.uco.publiuco.data.dao.relational.postgresql.EscritorPostgreSqlDAO;
+import co.edu.uco.publiuco.data.dao.relational.postgresql.EscritorPublicacionPostgreSqlDAO;
+import co.edu.uco.publiuco.data.dao.relational.postgresql.EstadoPostgreSqlDAO;
+import co.edu.uco.publiuco.data.dao.relational.postgresql.HistorialAccesoPublicacionPostgreSqlDAO;
+import co.edu.uco.publiuco.data.dao.relational.postgresql.LectorPostgreSqlDAO;
+import co.edu.uco.publiuco.data.dao.relational.postgresql.ObservacionRevisionPostgreSqlDAO;
+import co.edu.uco.publiuco.data.dao.relational.postgresql.PaisPostgreSqlDAO;
+import co.edu.uco.publiuco.data.dao.relational.postgresql.PalabraClavePublicacionPostgreSqlDAO;
+import co.edu.uco.publiuco.data.dao.relational.postgresql.PerfilPostgreSqlDAO;
+import co.edu.uco.publiuco.data.dao.relational.postgresql.PersonaPostgreSqlDAO;
+import co.edu.uco.publiuco.data.dao.relational.postgresql.PlanCategoriaPostgreSqlDAO;
+import co.edu.uco.publiuco.data.dao.relational.postgresql.PlanPublicacionPostgreSqlDAO;
+import co.edu.uco.publiuco.data.dao.relational.postgresql.PreferenciaCategoriaPostgreSqlDAO;
+import co.edu.uco.publiuco.data.dao.relational.postgresql.PreferenciaEscritorPostgreSqlDAO;
+import co.edu.uco.publiuco.data.dao.relational.postgresql.PublicacionPostgreSqlDAO;
+import co.edu.uco.publiuco.data.dao.relational.postgresql.ReportePostgreSqlDAO;
+import co.edu.uco.publiuco.data.dao.relational.postgresql.RespuestaPostgreSqlDAO;
+import co.edu.uco.publiuco.data.dao.relational.postgresql.RevisionPosgreSqlDAO;
+import co.edu.uco.publiuco.data.dao.relational.postgresql.RevisorPostgreSqlDAO;
+import co.edu.uco.publiuco.data.dao.relational.postgresql.RevisorRevisionPostgreSqlDAO;
+import co.edu.uco.publiuco.data.dao.relational.postgresql.SuscripcionCategoriaPostgreSqlDAO;
+import co.edu.uco.publiuco.data.dao.relational.postgresql.SuscripcionPublicacionPostgreSqlDAO;
+import co.edu.uco.publiuco.data.dao.relational.postgresql.TipoAccesoPostgreSqlDAO;
+import co.edu.uco.publiuco.data.dao.relational.postgresql.TipoComentarioRevisorPostgreSqlDAO;
+import co.edu.uco.publiuco.data.dao.relational.postgresql.TipoEscritorPostgreSqlDAO;
 import co.edu.uco.publiuco.data.dao.relational.postgresql.TipoEstadoPostreSqlDAO;
+import co.edu.uco.publiuco.data.dao.relational.postgresql.TipoIdentificacionPostgreSqlDAO;
+import co.edu.uco.publiuco.data.dao.relational.postgresql.TipoRelacionInstitucionPostgreSqlDAO;
+import co.edu.uco.publiuco.data.dao.relational.postgresql.TipoReportePostgreSqlDAO;
+import co.edu.uco.publiuco.data.dao.relational.postgresql.TipoRevisionPostgreSqlDAO;
+import co.edu.uco.publiuco.data.dao.relational.postgresql.VersionPostgreSqlDAO;
 import co.edu.uco.publiuco.data.dao.relational.sqlserver.EstadoSqlServerDAO;
 import co.edu.uco.publiuco.utils.UtilSql;
 
@@ -53,9 +89,9 @@ public class PostgresSqlDaoFactory extends DAOFactory{
 	
 	public static PostgresSqlDaoFactory INSTANCE = new PostgresSqlDaoFactory();
 	private static Connection connection;
-	private static String JDBCURL = "jdbc:postgresql://mahmud.db.elephantsql.com:5432/chiwqhoc";
-	private static String USERNAME = "chiwqhoc";
-	private static String PASSWORD = "JnwYqKUX1N9Skfs1WfetoscUE431ULfU";	
+	private static String JDBCURL = "jdbc:postgresql://mahmud.db.elephantsql.com:5432/nfjaiiyr";
+	private static String USERNAME = "nfjaiiyr";
+	private static String PASSWORD = "hFdpP8B7-CxwFNh4IuZ3NXdqnJbegOcf";	
 	
 	public PostgresSqlDaoFactory() {
 		openConnection();
@@ -97,250 +133,182 @@ public class PostgresSqlDaoFactory extends DAOFactory{
 	}
 
 	@Override
-	public EstadoDAO geEstadoDAO() {
-		// CAMBIAR CAMBIAR CAMBIAR CAMBIAR CAMBIAR
-		return new EstadoSqlServerDAO(connection);
+	public EstadoDAO getEstadoDAO() {
+		return new EstadoPostgreSqlDAO(connection);
 	}
-	
-	/*public List<String> getTiposEstados() {
-	    List<String> tipos = new ArrayList<>();
-	    PreparedStatement ps = null;
-	    ResultSet rs = null;
-
-	    try {
-	        initTransaction();
-	        ps = connection.prepareStatement("SELECT \"TipoEstado\".nombre FROM \"Estado\" JOIN \"TipoEstado\" ON \"TipoEstado\".identificador = \"Estado\".tipo;");
-	        rs = ps.executeQuery();
-	        while (rs.next()) {
-	            tipos.add(rs.getString("nombre"));
-	        }
-	        commitTransaction();
-	    } catch (SQLException ex) {
-	        rollbackTransaction();
-	        ex.printStackTrace();
-	    } finally {
-	        UtilSql.closeResultSet(rs);
-	        UtilSql.closePreparedStatement(ps);
-	    }
-
-	    return tipos;
-	}
-	*/
 
 	@Override
 	public PreferenciaCategoriaDAO getPreferenciaCategoriaDAO() {
-		// TODO Auto-generated method stub
-		return null;
+		return new PreferenciaCategoriaPostgreSqlDAO(connection);
 	}
 
 	@Override
 	public TipoRelacionInstitucionDAO getTipoRelacionInstitucionDAO() {
-		// TODO Auto-generated method stub
-		return null;
+		return new TipoRelacionInstitucionPostgreSqlDAO(connection);
 	}
 
 	@Override
 	public AdministradorCategoriaDAO getAdministradorCategoriaDAO() {
-		// TODO Auto-generated method stub
-		return null;
+		return new AdministradorCategoriaPostgreSqlDAO(connection);
 	}
 
 	@Override
 	public CalificacionDAO getCalificacionDAO() {
-		// TODO Auto-generated method stub
-		return null;
+		return new CalificacionPostgreSqlDAO(connection);
 	}
 
 	@Override
 	public CategoriaAdministradorCategoriaDAO getCategoriaAdministradorCategoriaDAO() {
-		// TODO Auto-generated method stub
-		return null;
+		return new CategoriaAdministradorCategoriaPostgreSqlDAO(connection);
 	}
 
 	@Override
 	public CategoriaDAO getCategoriaDAO() {
-		// TODO Auto-generated method stub
-		return null;
+		return new CategoriaPostgreSqlDAO(connection);
 	}
 
 	@Override
 	public ComentarioLectorDAO getComentarioLectorDAO() {
-		// TODO Auto-generated method stub
-		return null;
+		return new ComentarioLectorPostgreSqlDAO(connection);
 	}
 
 	@Override
 	public ComentarioRevisorDAO getComentarioRevisorDAO() {
-		// TODO Auto-generated method stub
-		return null;
+		return new ComentarioRevisorPostgreSqlDAO(connection);
 	}
 
 	@Override
 	public EscritorDAO getEscritorDAO() {
-		// TODO Auto-generated method stub
-		return null;
+		return new EscritorPostgreSqlDAO(connection);
 	}
 
 	@Override
 	public EscritorPublicacionDAO getEscritorPublicacionDAO() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public EstadoDAO getEstadoDAO() {
-		// TODO Auto-generated method stub
-		return null;
+		return new EscritorPublicacionPostgreSqlDAO(connection);
 	}
 
 	@Override
 	public HistorialAccesoPublicacionDAO getHistorialAccesoPublicacionDAO() {
-		// TODO Auto-generated method stub
-		return null;
+		return new HistorialAccesoPublicacionPostgreSqlDAO(connection);
 	}
 
 	@Override
 	public LectorDAO getLectorDAO() {
-		// TODO Auto-generated method stub
-		return null;
+		return new LectorPostgreSqlDAO(connection);
 	}
 
 	@Override
 	public ObservacionRevisionDAO getObservacionRevisionDAO() {
-		// TODO Auto-generated method stub
-		return null;
+		return new ObservacionRevisionPostgreSqlDAO(connection);
 	}
 
 	@Override
 	public PaisDAO getPaisDAO() {
-		// TODO Auto-generated method stub
-		return null;
+		return new PaisPostgreSqlDAO(connection);
 	}
 
 	@Override
 	public PalabraClavePublicacionDAO getPalabraClavePublicacionDAO() {
-		// TODO Auto-generated method stub
-		return null;
+		return new PalabraClavePublicacionPostgreSqlDAO(connection);
 	}
 
 	@Override
 	public PerfilDAO getPerfilDAO() {
-		// TODO Auto-generated method stub
-		return null;
+		return new PerfilPostgreSqlDAO(connection);
 	}
 
 	@Override
 	public PersonaDAO getPersonaDAO() {
-		// TODO Auto-generated method stub
-		return null;
+		return new PersonaPostgreSqlDAO(connection);
 	}
 
 	@Override
 	public PlanCategoriaDAO getPlanCategoriaDAO() {
-		// TODO Auto-generated method stub
-		return null;
+		return new PlanCategoriaPostgreSqlDAO(connection);
 	}
 
 	@Override
 	public PlanPublicacionDAO getPlanPublicacionDAO() {
-		// TODO Auto-generated method stub
-		return null;
+		return new PlanPublicacionPostgreSqlDAO(connection);
 	}
 
 	@Override
 	public PreferenciaEscritorDAO getPreferenciaEscritorDAO() {
-		// TODO Auto-generated method stub
-		return null;
+		return new PreferenciaEscritorPostgreSqlDAO(connection);
 	}
 
 	@Override
 	public PublicacionDAO getPublicacionDAO() {
-		// TODO Auto-generated method stub
-		return null;
+		return new PublicacionPostgreSqlDAO(connection);
 	}
 
 	@Override
 	public ReporteDAO getReporteDAO() {
-		// TODO Auto-generated method stub
-		return null;
+		return new ReportePostgreSqlDAO(connection);
 	}
 
 	@Override
 	public RespuestaDAO getRespuestaDAO() {
-		// TODO Auto-generated method stub
-		return null;
+		return new RespuestaPostgreSqlDAO(connection);
 	}
 
 	@Override
 	public RevisionDAO getRevisionDAO() {
-		// TODO Auto-generated method stub
-		return null;
+		return new RevisionPosgreSqlDAO(connection);
 	}
 
 	@Override
 	public RevisorDAO getRevisorDAO() {
-		// TODO Auto-generated method stub
-		return null;
+		return new RevisorPostgreSqlDAO(connection);
 	}
 
 	@Override
 	public RevisorRevisionDAO getRevisorRevisionDAO() {
-		// TODO Auto-generated method stub
-		return null;
+		return new RevisorRevisionPostgreSqlDAO(connection);
 	}
 
 	@Override
 	public SuscripcionCategoriaDAO getuSuscripcionCategoriaDAO() {
-		// TODO Auto-generated method stub
-		return null;
+		return new SuscripcionCategoriaPostgreSqlDAO(connection); 	
 	}
 
 	@Override
 	public SuscripcionPublicacionDAO getSuscripcionPublicacionDAO() {
-		// TODO Auto-generated method stub
-		return null;
+		return new SuscripcionPublicacionPostgreSqlDAO(connection);
 	}
 
 	@Override
 	public TipoAccesoDAO getTipoAccesoDAO() {
-		// TODO Auto-generated method stub
-		return null;
+		return new TipoAccesoPostgreSqlDAO(connection);
 	}
 
 	@Override
 	public TipoComentarioRevisorDAO getTipoComentarioRevisorDAO() {
-		// TODO Auto-generated method stub
-		return null;
+		return new TipoComentarioRevisorPostgreSqlDAO(connection);
 	}
 
 	@Override
 	public TipoEscritorDAO getTipoEscritorDAO() {
-		// TODO Auto-generated method stub
-		return null;
+		return new TipoEscritorPostgreSqlDAO(connection);
 	}
 
 	@Override
 	public TipoIdentificacionDAO getTipoIdentificacionDAO() {
-		// TODO Auto-generated method stub
-		return null;
+		return new TipoIdentificacionPostgreSqlDAO(connection);
 	}
 
 	@Override
 	public TipoReporteDAO getTipoReporteDAO() {
-		// TODO Auto-generated method stub
-		return null;
+		return new TipoReportePostgreSqlDAO(connection);
 	}
 
 	@Override
 	public TipoRevisionDAO getTipoRevisionDAO() {
-		// TODO Auto-generated method stub
-		return null;
+		return new TipoRevisionPostgreSqlDAO(connection);
 	}
 
 	@Override
 	public VersionDAO getVersionDAO() {
-		// TODO Auto-generated method stub
-		return null;
+		return new VersionPostgreSqlDAO(connection);
 	}
-
 }

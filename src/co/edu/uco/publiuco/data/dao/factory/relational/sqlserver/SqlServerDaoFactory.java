@@ -89,12 +89,6 @@ public final class SqlServerDaoFactory extends DAOFactory{
 	}
 
 	@Override
-	public EstadoDAO geEstadoDAO() {
-		// TODO Auto-generated method stub
-		return new EstadoSqlServerDAO(connection);
-	}
-
-	@Override
 	public PreferenciaCategoriaDAO getPreferenciaCategoriaDAO() {
 		// TODO Auto-generated method stub
 		return null;
