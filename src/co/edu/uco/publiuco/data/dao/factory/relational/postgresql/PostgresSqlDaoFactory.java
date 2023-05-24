@@ -1,11 +1,6 @@
 package co.edu.uco.publiuco.data.dao.factory.relational.postgresql;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 import co.edu.uco.publiuco.data.dao.AdministradorCategoriaDAO;
 import co.edu.uco.publiuco.data.dao.CalificacionDAO;
@@ -82,23 +77,17 @@ import co.edu.uco.publiuco.data.dao.relational.postgresql.TipoRelacionInstitucio
 import co.edu.uco.publiuco.data.dao.relational.postgresql.TipoReportePostgreSqlDAO;
 import co.edu.uco.publiuco.data.dao.relational.postgresql.TipoRevisionPostgreSqlDAO;
 import co.edu.uco.publiuco.data.dao.relational.postgresql.VersionPostgreSqlDAO;
-import co.edu.uco.publiuco.data.dao.relational.sqlserver.EstadoSqlServerDAO;
 import co.edu.uco.publiuco.utils.UtilSql;
 
-public class PostgresSqlDaoFactory extends DAOFactory{
-	
-	public static PostgresSqlDaoFactory INSTANCE = new PostgresSqlDaoFactory();
+public class PostgresSqlDaoFactory extends DAOFactory {
+
 	private static Connection connection;
 	private static String JDBCURL = "jdbc:postgresql://mahmud.db.elephantsql.com:5432/nfjaiiyr";
 	private static String USERNAME = "nfjaiiyr";
-	private static String PASSWORD = "hFdpP8B7-CxwFNh4IuZ3NXdqnJbegOcf";	
-	
+	private static String PASSWORD = "hFdpP8B7-CxwFNh4IuZ3NXdqnJbegOcf";
+
 	public PostgresSqlDaoFactory() {
 		openConnection();
-	}
-	
-	public static PostgresSqlDaoFactory getInstance() {
-		return INSTANCE;
 	}
 
 	@Override
@@ -112,20 +101,19 @@ public class PostgresSqlDaoFactory extends DAOFactory{
 	}
 
 	@Override
-    public void initTransaction() {
-        UtilSql.initTransaction(connection);
-    }
+	public void initTransaction() {
+		UtilSql.initTransaction(connection);
+	}
 
-    @Override
-    public void commitTransaction() {
-        UtilSql.commitTransaction(connection);
-    }
+	@Override
+	public void commitTransaction() {
+		UtilSql.commitTransaction(connection);
+	}
 
-    @Override
-    public void rollbackTransaction() {
-        UtilSql.rollbackTransaction(connection);
-    }
-
+	@Override
+	public void rollbackTransaction() {
+		UtilSql.rollbackTransaction(connection);
+	}
 
 	@Override
 	public TipoEstadoDAO getTipoEstadoDAO() {
@@ -269,7 +257,7 @@ public class PostgresSqlDaoFactory extends DAOFactory{
 
 	@Override
 	public SuscripcionCategoriaDAO getuSuscripcionCategoriaDAO() {
-		return new SuscripcionCategoriaPostgreSqlDAO(connection); 	
+		return new SuscripcionCategoriaPostgreSqlDAO(connection);
 	}
 
 	@Override
@@ -310,5 +298,12 @@ public class PostgresSqlDaoFactory extends DAOFactory{
 	@Override
 	public VersionDAO getVersionDAO() {
 		return new VersionPostgreSqlDAO(connection);
+	}
+
+	public static void main(String[] args) {
+		// UtilSql.openConnection(JDBCURL, USERNAME, PASSWORD);
+		// UtilSql.closeConnection(connection);
+		PostgresSqlDaoFactory intentoultimoomesuicido = new PostgresSqlDaoFactory();
+		intentoultimoomesuicido.closeConnection();
 	}
 }

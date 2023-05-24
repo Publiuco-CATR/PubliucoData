@@ -1,6 +1,7 @@
 package co.edu.uco.publiuco.data.dao.relational.postgresql;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -79,8 +80,8 @@ public class AdministradorCategoriaPostgreSqlDAO extends SqlDAO<AdministradorCat
 		var sqlStatement = "UPDATE \"TipoEstado\" SET nombre=?, descripcion = ? WHERE identificador = ?;";
 		
 		try (var preparedStatement = getConnection().prepareStatement(sqlStatement)) {
-			preparedStatement.setString(1, entity.getNombre());
-			preparedStatement.setString(2, entity.getDescripcion());
+			//preparedStatement.setString(1, entity.getNombre());
+			//preparedStatement.setString(2, entity.getDescripcion());
 			preparedStatement.setObject(3, entity.getIdentificador());
 			
 			preparedStatement.executeUpdate();
@@ -142,7 +143,7 @@ public class AdministradorCategoriaPostgreSqlDAO extends SqlDAO<AdministradorCat
 				where.append("WHERE identificador = ? ");
 				setWhere = false;
 			}
-			if (!UtilText.getUtilText().isEmpty(entity.getDatosPersona().getIdentificador())) {
+			/*if (!UtilText.getUtilText().isEmpty(entity.getDatosPersona().getIdentificador())) {
 				parameters.add(entity.getDatosPersona().getIdentificador());
 				where.append(setWhere ? "WHERE " : "AND ").append("nombre = ? ");
 				setWhere = false;
@@ -151,7 +152,7 @@ public class AdministradorCategoriaPostgreSqlDAO extends SqlDAO<AdministradorCat
 				parameters.add(entity.getDescripcion());
 				where.append(setWhere ? "WHERE " : "AND ").append("descripcion = ? ");
 				setWhere = false;
-			}
+			}*/
 		}
 		
 		return where.toString();
@@ -160,6 +161,18 @@ public class AdministradorCategoriaPostgreSqlDAO extends SqlDAO<AdministradorCat
 	@Override
 	protected final String preparedOrderBy() {
 		return "ORDER BY nombre ASC";
+	}
+
+	@Override
+	protected void setParameters(PreparedStatement preparedStatement, List<Object> parameters) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected List<AdministradorCategoriaEntity> executeQuery(PreparedStatement preparedStatement) {
+		// TODO Auto-generated method stub
+		return null;
 	}
     
 }
