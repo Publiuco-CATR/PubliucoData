@@ -138,6 +138,4 @@ public final class EstadoPostgreSqlDAO extends SqlDAO<EstadoEntity>  implements 
 
 		}		
 	}
-
-
 }

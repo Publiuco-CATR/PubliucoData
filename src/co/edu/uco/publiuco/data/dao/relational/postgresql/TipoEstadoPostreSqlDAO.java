@@ -49,12 +49,12 @@ public class TipoEstadoPostreSqlDAO extends SqlDAO<TipoEstadoEntity> implements 
 
 	@Override
 	protected final String preparedSelect() {
-		return "SELECT identificador, nombre, descripcion";
+		return "SELECT te.identificador identificador, te.nombre nombre, te.descripcion descripcion ";
 	}
 
 	@Override
 	protected final String preparedFrom() {
-		return "FROM \"TipoEstado\"";
+		return "FROM \"TipoEstado\" te";
 	}
 
 	@Override
@@ -73,11 +73,6 @@ public class TipoEstadoPostreSqlDAO extends SqlDAO<TipoEstadoEntity> implements 
 			if (!UtilText.getUtilText().isEmpty(entity.getNombre())) {
 				parameters.add(entity.getNombre());
 				where.append(setWhere ? "WHERE " : "AND ").append("nombre = ? ");
-				setWhere = false;
-			}
-			if (!UtilText.getUtilText().isEmpty(entity.getDescripcion())) {
-				parameters.add(entity.getDescripcion());
-				where.append(setWhere ? "WHERE " : "AND ").append("descripcion = ? ");
 				setWhere = false;
 			}
 		}

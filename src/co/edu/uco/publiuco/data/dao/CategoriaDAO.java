@@ -7,12 +7,12 @@ import co.edu.uco.publiuco.entities.CategoriaEntity;
 
 public interface CategoriaDAO {
 	
-	void create(CategoriaEntity entity);
+	//void create(CategoriaEntity entity);
 
 	List<CategoriaEntity> read(CategoriaEntity entity);
 
-	void update(CategoriaEntity entity);
+	//void update(CategoriaEntity entity);
 
-	void delete(UUID entityId);
+	//void delete(UUID entityId);
 
 }
