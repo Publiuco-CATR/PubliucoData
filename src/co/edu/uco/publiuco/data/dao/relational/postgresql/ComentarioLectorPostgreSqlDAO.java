@@ -32,7 +32,7 @@ public class ComentarioLectorPostgreSqlDAO extends SqlDAO<ComentarioLectorEntity
 
 		try (var preparedStatement = getConnection().prepareStatement(sqlStatement)) {
 			preparedStatement.setObject(1, entity.getIdentificador());
-			preparedStatement.setObject(2, entity.getLector().getIdentificador());
+			preparedStatement.setObject(2, entity.getLector().getIdentificador()); 
 			preparedStatement.setObject(3, entity.getPublicacion().getIdentificador());
 			preparedStatement.setBoolean(4, entity.tienePadre());
 			preparedStatement.setObject(5, entity.tienePadre() ? entity.getComentarioPadre().getIdentificador() : null);
@@ -130,13 +130,13 @@ public class ComentarioLectorPostgreSqlDAO extends SqlDAO<ComentarioLectorEntity
 				where.append("WHERE e.identificador = ? ");
 				setWhere = false;
 			}
-			if (!UtilText.isEmpty(entity.getNombre())) {
-				parameters.add(entity.getNombre());
-				where.append(setWhere ? "WHERE " : "AND ").append("e.nombre = ? ");
-				setWhere = false;
-			}
-			if (!UtilUUID.isDefault(entity.getCategoriaPadre().getIdentificador())) {
-				parameters.add(entity.getCategoriaPadre().getIdentificador());
+//			if (!UtilText.isEmpty(entity.getNombre())) {
+//				parameters.add(entity.getNombre());
+//				where.append(setWhere ? "WHERE " : "AND ").append("e.nombre = ? ");
+//				setWhere = false;
+//			}
+			if (!UtilUUID.isDefault(entity.getComentarioPadre().getIdentificador())) {
+				parameters.add(entity.getComentarioPadre().getIdentificador());
 				where.append(setWhere ? "WHERE " : "AND ");
 				setWhere = false;
 			}
@@ -178,7 +178,7 @@ public class ComentarioLectorPostgreSqlDAO extends SqlDAO<ComentarioLectorEntity
 		
 		try (var resultSet = preparedStatement.executeQuery()){
 			while(resultSet.next()) {
-				final CategoriaEntity entityTmp = CategoriaEntity.create()
+				final ComentarioLectorDAO entityTmp = ComentarioLectorEntity.create()
 						.setIdentificador(resultSet.getObject("identificador", UUID.class))
 						.setNombre(resultSet.getString("nombre"))
 						.setDescripcion(resultSet.getString("descripcion"))

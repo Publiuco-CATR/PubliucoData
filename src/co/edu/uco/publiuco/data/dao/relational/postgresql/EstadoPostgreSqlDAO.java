@@ -62,7 +62,7 @@ public final class EstadoPostgreSqlDAO extends SqlDAO<EstadoEntity>  implements 
 	@Override
 	protected final String preparedWhere(final EstadoEntity entity, List<Object> parameters) {
 		final var where = new StringBuilder("");
-		parameters = UtilObject.getDefault(parameters, new ArrayList<>()); //por referencia
+		parameters = UtilObject.getDefault(parameters, new ArrayList<>());
 		var setWhere = true;
 		
 		if (!UtilObject.isNull(entity)){
@@ -72,17 +72,17 @@ public final class EstadoPostgreSqlDAO extends SqlDAO<EstadoEntity>  implements 
 				where.append("WHERE e.identificador = ? ");
 				setWhere = false;
 			}
-			if (!UtilText.getUtilText().isEmpty(entity.getNombre())) {
+			if (!UtilText.isEmpty(entity.getNombre())) {
 				parameters.add(entity.getNombre());
 				where.append(setWhere ? "WHERE " : "AND ").append("e.nombre = ? ");
 				setWhere = false;
 			}
-			if (UtilObject.isNull(entity.getTipo().getIdentificador()) && !UtilUUID.isDefault(entity.getTipo().getIdentificador())){
+			if (!UtilObject.isNull(entity.getTipo().getIdentificador()) && !UtilUUID.isDefault(entity.getTipo().getIdentificador())){
 				parameters.add(entity.getTipo().getIdentificador());
 				where.append(setWhere ? "WHERE " : "AND ").append(" te.identificador = ? ");
 				setWhere = false;
 			}
-			if (!UtilObject.isNull(entity.getTipo().getNombre()) && UtilText.isEmpty(entity.getTipo().getNombre())) {
+			if (!UtilObject.isNull(entity.getTipo()) && !UtilText.isEmpty(entity.getTipo().getNombre())) {
 				parameters.add(entity.getTipo().getNombre());
 				where.append(setWhere ? "WHERE " : "AND ").append("te.nombre = ? ");
 				setWhere = false;
@@ -94,12 +94,12 @@ public final class EstadoPostgreSqlDAO extends SqlDAO<EstadoEntity>  implements 
 
 	@Override
 	protected final String preparedOrderBy() {
-		return "ORDER BY nombre ASC";
+		return "ORDER BY te.nombre ASC";
 	}
 	
 	@Override
 	protected final void setParameters(final PreparedStatement preparedStatement, final List<Object> parameters) {
-		try {
+		try {	
 			if (!UtilObject.isNull(parameters) && !UtilObject.isNull(preparedStatement))  {
 				for(int index = 0; index < parameters.size(); index ++) {
 					preparedStatement.setObject(index + 1, parameters.get(index));
