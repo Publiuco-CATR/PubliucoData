@@ -1,7 +1,6 @@
 package co.edu.uco.publiuco.data.dao.relational.postgresql;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -62,7 +61,7 @@ public class CategoriaPostgreSqlDAO extends SqlDAO<CategoriaEntity> implements C
 	@Override
 	protected final String preparedWhere(final CategoriaEntity entity, List<Object> parameters) {
 		final var where = new StringBuilder("");
-		parameters = UtilObject.getDefault(parameters, new ArrayList<>()); //por referencia
+		parameters = UtilObject.getDefault(parameters, new ArrayList<>());
 		var setWhere = true;
 		
 		if (!UtilObject.isNull(entity)){
@@ -121,7 +120,6 @@ public class CategoriaPostgreSqlDAO extends SqlDAO<CategoriaEntity> implements C
 		
 		try (var resultSet = preparedStatement.executeQuery()){
 			while(resultSet.next()) {
-				System.out.println(resultSet.getObject("identificador", UUID.class));
 				final CategoriaEntity entityTmp = CategoriaEntity.create()
 						.setIdentificador(resultSet.getObject("identificador", UUID.class))
 						.setNombre(resultSet.getString("nombre"))
@@ -132,12 +130,10 @@ public class CategoriaPostgreSqlDAO extends SqlDAO<CategoriaEntity> implements C
 				if (!UtilObject.isNull(resultSet.getObject("identificadorCategoriaPadre", UUID.class)) && !UtilUUID.isDefault(resultSet.getObject("identificadorCategoriaPadre", UUID.class))) {
 					entityTmp.setCategoriaPadre(read(CategoriaEntity.create().setIdentificador(resultSet.getObject("identificadorCategoriaPadre", UUID.class))).get(0));
 				}
-				System.out.println(UtilObject.getInstanceInString(entityTmp));
 				result.add(entityTmp);
 				
 				
 			}
-			System.out.println(result);
 			return result;
 			
 		} catch(final SQLException exception) {			
@@ -148,17 +144,4 @@ public class CategoriaPostgreSqlDAO extends SqlDAO<CategoriaEntity> implements C
 
 		}		
 	}	
-	
-	public static void main(String[] args) {
-		Connection connection;
-		try {
-			connection = DriverManager.getConnection("jdbc:postgresql://mahmud.db.elephantsql.com:5432/nfjaiiyr", "nfjaiiyr","hFdpP8B7-CxwFNh4IuZ3NXdqnJbegOcf");
-			var ensayo =  new CategoriaPostgreSqlDAO(connection);
-			System.out.println(ensayo.read(CategoriaEntity.create()).toString());;
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 }

@@ -14,6 +14,8 @@ import co.edu.uco.publiuco.data.dao.relational.SqlDAO;
 import co.edu.uco.publiuco.entities.CategoriaEntity;
 import co.edu.uco.publiuco.entities.ComentarioLectorEntity;
 import co.edu.uco.publiuco.entities.EstadoEntity;
+import co.edu.uco.publiuco.entities.LectorEntity;
+import co.edu.uco.publiuco.entities.PublicacionEntity;
 import co.edu.uco.publiuco.entities.TipoEstadoEntity;
 import co.edu.uco.publiuco.utils.Messages;
 import co.edu.uco.publiuco.utils.UtilObject;
@@ -32,7 +34,7 @@ public class ComentarioLectorPostgreSqlDAO extends SqlDAO<ComentarioLectorEntity
 
 		try (var preparedStatement = getConnection().prepareStatement(sqlStatement)) {
 			preparedStatement.setObject(1, entity.getIdentificador());
-			preparedStatement.setObject(2, entity.getLector().getIdentificador()); 
+			preparedStatement.setObject(2, entity.getLector().getIdentificador());
 			preparedStatement.setObject(3, entity.getPublicacion().getIdentificador());
 			preparedStatement.setBoolean(4, entity.tienePadre());
 			preparedStatement.setObject(5, entity.tienePadre() ? entity.getComentarioPadre().getIdentificador() : null);
@@ -109,18 +111,18 @@ public class ComentarioLectorPostgreSqlDAO extends SqlDAO<ComentarioLectorEntity
 
 	@Override
 	protected final String preparedSelect() {
-		return "SELECT p.identificador identificador, c.identificador identificadorcategoria, c.nombre nombrecategoria, ec.identificador idestcat, ec.nombre nomestcat, teec.identificador teidescat, teec.nombre tenomescat, p.\"fechaPublicacion\" fechapublicacion, v.identificador identificadorversion, v.titulo titulo, v.resumen resumen, v.cuerpo cuerpo, ev.identificador idestv, ev.nombre nomestv, teev.identificador teidestv, teev.nombre tenomestv, e.identificador estadoidentificador, e.nombre estadonombre, tee.identificador teides, tee.nombre tenomes";
+		return "SELECT cl.identificador identificador, cl.lector idlector, el.nombre estlector, l.\"datosPersona\" idpersonalector, pl.\"primerNombre\" nombre1, pl.\"segundoNombre\" nombre2,pl.\"primerApellido\" apellido1, pl.\"segundoApellido\" apellido2, pl.\"correoElectronico\" correo, epl.nombre estpersonalector, cl.publicacion idpublicacion, p.\"versionPublicada\" idversion, p.\"fechaPublicacion\", vp.titulo tituloversion, ep.nombre estpublicacion, cl.\"tienePadre\" tienepadre, cl.\"comentarioPadre\" idpadre, cl.\"fechaComentario\" fechacomentario, cl.contenido contenido, cl.estado est, ecl.nombre estcomentario ";
 	}
 
 	@Override
 	protected final String preparedFrom() {
-		return "FROM \"Publicacion\" p JOIN \"Categoria\" c ON c.identificador = p.categoria JOIN \"Estado\" ec ON ec.identificador = c.estado JOIN \"TipoEstado\" teec ON teec.identificador = ec.\"tipoEstado\" JOIN \"Version\" v ON v.identificador = p.\"versionPublicada\" JOIN \"Estado\" ev ON ev.identificador = v.estado JOIN \"TipoEstado\" teev ON teev.identificador = ev.\"tipoEstado\" JOIN \"Estado\" e ON e.identificador = p.estado JOIN \"TipoEstado\" tee ON tee.identificador = e.\"tipoEstado\"";
+		return "FROM \"ComentarioLector\" cl LEFT JOIN \"Lector\" l ON l.identificador = cl.lector LEFT JOIN \"Persona\" pl ON pl.identificador = l.\"datosPersona\" LEFT JOIN \"Estado\" epl ON epl.identificador = pl.estado LEFT JOIN \"TipoEstado\" teepl ON teepl.identificador = epl.\"tipoEstado\" LEFT JOIN \"Estado\" el ON el.identificador = l.estado LEFT JOIN \"TipoEstado\" teel ON teel.identificador = el.\"tipoEstado\" LEFT JOIN \"Publicacion\" p ON p.identificador = cl.publicacion LEFT JOIN \"Categoria\" cp ON cp.identificador = p.categoria LEFT JOIN \"TipoAcceso\" tacp ON tacp.identificador = p.\"tipoAcceso\" LEFT JOIN \"Version\" vp ON vp.identificador = p.\"versionPublicada\" LEFT JOIN \"Estado\" ep ON ep.identificador = p.estado LEFT JOIN \"TipoEstado\" teep ON teepl.identificador = ep.\"tipoEstado\" LEFT JOIN \"Estado\" ecl ON ecl.identificador = cl.estado LEFT JOIN \"TipoEstado\" teecl ON teecl.identificador = ecl.\"tipoEstado\" ";
 	}
 
 	@Override
 	protected final String preparedWhere(final ComentarioLectorEntity entity, List<Object> parameters) {
 		final var where = new StringBuilder("");
-		parameters = UtilObject.getDefault(parameters, new ArrayList<>()); //por referencia
+		parameters = UtilObject.getDefault(parameters, new ArrayList<>());
 		var setWhere = true;
 		
 		if (!UtilObject.isNull(entity)){
@@ -130,12 +132,12 @@ public class ComentarioLectorPostgreSqlDAO extends SqlDAO<ComentarioLectorEntity
 				where.append("WHERE e.identificador = ? ");
 				setWhere = false;
 			}
-//			if (!UtilText.isEmpty(entity.getNombre())) {
-//				parameters.add(entity.getNombre());
-//				where.append(setWhere ? "WHERE " : "AND ").append("e.nombre = ? ");
-//				setWhere = false;
-//			}
-			if (!UtilUUID.isDefault(entity.getComentarioPadre().getIdentificador())) {
+			if (!UtilText.isEmpty(entity.getCotenido())) {
+				parameters.add(entity.getCotenido());
+				where.append(setWhere ? "WHERE " : "AND ").append("e.nombre = ? ");
+				setWhere = false;
+			}
+			if (entity.tienePadre()? !UtilUUID.isDefault(entity.getComentarioPadre().getIdentificador()):false) {
 				parameters.add(entity.getComentarioPadre().getIdentificador());
 				where.append(setWhere ? "WHERE " : "AND ");
 				setWhere = false;
@@ -178,18 +180,18 @@ public class ComentarioLectorPostgreSqlDAO extends SqlDAO<ComentarioLectorEntity
 		
 		try (var resultSet = preparedStatement.executeQuery()){
 			while(resultSet.next()) {
-				final ComentarioLectorDAO entityTmp = ComentarioLectorEntity.create()
+				final ComentarioLectorEntity entityTmp = ComentarioLectorEntity.create()
 						.setIdentificador(resultSet.getObject("identificador", UUID.class))
-						.setNombre(resultSet.getString("nombre"))
-						.setDescripcion(resultSet.getString("descripcion"))
-						.setTienePadre(resultSet.getBoolean("tienePadre"))
-						.setEstado(EstadoEntity.create().setIdentificador(resultSet.getObject("identificadorestado", UUID.class)).setNombre(resultSet.getString("nombreestado"))
-								.setTipo(TipoEstadoEntity.create().setIdentificador(resultSet.getObject("identificadortipoestado", UUID.class)).setNombre(resultSet.getString("nombretipoestado"))))
-						.setCategoriaPadre(UtilUUID.isDefault(resultSet.getObject("identificadorCategoriaPadre", UUID.class)) ? read(CategoriaEntity.create().setIdentificador(resultSet.getObject("identificadorCategoriaPadre", UUID.class))).get(0) : null);
+						.setLector(
+								LectorEntity.create())
+						.setPublicacion(PublicacionEntity.create())
+						.setTienePadre(resultSet.getBoolean("tienepadre"))
+						.setComentarioPadre(resultSet.getBoolean("tienepadre") ? ComentarioLectorEntity.create() : (ComentarioLectorEntity) UtilObject.getNullValue())
+						.setFechaComentario(resultSet.getTimestamp("fechacomentario").toLocalDateTime())
+						.setContenido(resultSet.getString("contenido"))
+						.setEstado(EstadoEntity.create());
 						
-//				if (UtilUUID.isDefault(resultSet.getObject("identificadorCategoriaPadre", UUID.class))) {
-//					entityTmp.setCategoriaPadre(read(CategoriaEntity.create().setIdentificador(resultSet.getObject("identificadorCategoriaPadre", UUID.class))).get(0));
-//				}
+
 				result.add(entityTmp);
 			}
 			return result;
@@ -202,4 +204,5 @@ public class ComentarioLectorPostgreSqlDAO extends SqlDAO<ComentarioLectorEntity
 
 		}
 	}
+	
 }
